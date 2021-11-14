@@ -16,6 +16,8 @@
     "typedoc": "^0.22.9"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "predocs": "tsc",
+    "docs": "typedoc src --plugin dist/index.js"
   }
 }
