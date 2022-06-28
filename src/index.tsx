@@ -30,10 +30,10 @@ export class FooterOverrideThemeContext extends DefaultThemeRenderContext {
 
     // Overridden methods must have `this` bound if they intend to use it.
     // <JSX.Raw /> may be used to inject HTML directly.
-    this.footer = (props: PageEvent<Reflection>) => {
+    this.footer = () => {
       return (
         <>
-          {oldFooter(props)}
+          {oldFooter()}
           <div class="container">
             <JSX.Raw
               html={this.markdown(
