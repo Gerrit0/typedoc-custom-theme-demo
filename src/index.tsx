@@ -7,15 +7,16 @@ import {
   DefaultThemeRenderContext,
   Options,
   RenderTemplate,
+  Router,
 } from "typedoc";
 
 /**
  * A clone of the default theme, which prints a message when rendering each page.
  */
 export class LoggingTheme extends DefaultTheme {
-  render(page: PageEvent<Reflection>, template: RenderTemplate<PageEvent<Reflection>>): string {
+  render(page: PageEvent): string {
     this.application.logger.info(`Rendering ${page.url}`);
-    return super.render(page, template);
+    return super.render(page);
   }
 }
 
@@ -24,8 +25,8 @@ export class LoggingTheme extends DefaultTheme {
  * in addition to some helper functions.
  */
 export class FooterOverrideThemeContext extends DefaultThemeRenderContext {
-  constructor(theme: DefaultTheme, page: PageEvent<Reflection>, options: Options) {
-    super(theme, page, options);
+  constructor(...args: ConstructorParameters<typeof DefaultThemeRenderContext>) {
+    super(...args);
 
     const oldFooter = this.footer;
 
@@ -52,15 +53,7 @@ export class FooterOverrideThemeContext extends DefaultThemeRenderContext {
  * A near clone of the default theme, that adds some custom text after the footer.
  */
 export class FooterOverrideTheme extends DefaultTheme {
-  private _contextCache?: FooterOverrideThemeContext;
-
-  override getRenderContext(page: PageEvent<Reflection>): FooterOverrideThemeContext {
-    return new FooterOverrideThemeContext(
-      this,
-      page,
-      this.application.options
-    );
-  }
+  ContextClass = FooterOverrideThemeContext;
 }
 
 /**
